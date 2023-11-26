@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ESP32 MQTT</title>
+    <link rel="icon" type="image/png" href="img/tab-icon.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.2.7/mqtt.min.js"></script>
+  </head>
+  <body>
+    <div id="header">
+      <div class="header_wp">
+        <div>
+          <a
+            class="d-flex justify-content-center align-items-center ml-5"
+            style="color: #fff; text-decoration: none"
+            href=""
+            ><img
+              src="img/logo-icon.png"
+              alt="ESP32 WEBSERVER"
+              style="width: 100px; height: auto"
+            />
+            <h1 class="ml-2 logo" style="font-size: 55px; font-weight: 800">
+              IoT SMART GARDEN
+            </h1></a
+          >
+        </div>
+      </div>
+    </div>
+    <div id="content">
+      <div class="container">
+        <div class="item">
+          <div class="gauge gaugeHum">
+            <div class="gauge__body">
+              <div class="gauge__fill"></div>
+              <div class="gauge__cover">
+                <span id="humidityValue"></span>
+                <!-- <sup class="units">&percnt;</sup> -->
+              </div>
+            </div>
+            <h2 class="text-center mt-4 title_humidity text-dark">
+              ĐỘ ẨM <i class="fa-solid fa-droplet"></i>
+            </h2>
+          </div>
+        </div>
+        <div class="item">
+          <div class="gauge gaugeTemp">
+            <div class="gauge__body">
+              <div class="gauge__fill"></div>
+              <div class="gauge__cover">
+                <span id="temperatureValue"></span>
+                <!-- <sup class="units">&percnt;</sup> -->
+              </div>
+            </div>
+            <h2 class="text-center mt-4 title_temperature text-dark">
+              NHIỆT ĐỘ <i class="fa-solid fa-temperature-three-quarters"></i>
+            </h2>
+          </div>
+        </div>
+        <div class="item">
+          <div class="gauge gaugeSoil">
+            <div class="gauge__body">
+              <div class="gauge__fill"></div>
+              <div class="gauge__cover">
+                <span id="soilValue"></span>
+                <!-- <sup class="units">&percnt;</sup> -->
+              </div>
+            </div>
+            <h2 class="text-center mt-4 title_temperature text-dark">
+              ĐỘ ẨM ĐẤT <i class="fa-solid fa-leaf"></i>
+            </h2>
+          </div>
+        </div>
+        <div id="soil-status" class="item">
+          <div class="title-item" style="margin-top: 20px">
+            <h2>NGƯỠNG ĐỘ ẨM ĐẤT: <span id="soil-value"></span></h2>
+          </div>
+          <input
+            type="range"
+            value=" "
+            step="1"
+            min="0"
+            max="100"
+            id="progress"
+          />
+        </div>
+        <div id="light-status" class="item">
+          <div class="title-item"></div>
+          <div class="wrapper-img">
+            <img id="light-img" src="img/sun-icon.png" alt="" />
+          </div>
+        </div>
+        <div id="rain-status" class="item">
+          <div class="title-item"></div>
+          <div class="wrapper-img">
+            <img id="rain-img" src="img/rain-icon.png" alt="" />
+            <!-- style="filter: grayscale(100%)" -->
+            <img
+              id="rain-img-non"
+              src="img/x.png"
+              alt=""
+              style="margin-top: 10px; max-width: 160px; display: none"
+            />
+          </div>
+        </div>
+        <div id="mode" class="item control-button">
+          <div class="title-item"></div>
+          <div class="wrapper-button">
+            <button class="custom-button on-button" onclick="toggleMode(this)">
+              ON
+            </button>
+            <button class="custom-button off-button" onclick="toggleMode(this)">
+              OFF
+            </button>
+          </div>
+          <div class="button-img">
+            <img src="img/mode-icon.png" alt="" />
+          </div>
+        </div>
+        <div id="pump" class="item control-button">
+          <div class="title-item"></div>
+          <div class="wrapper-button">
+            <button class="custom-button on-button" onclick="togglePump(this)">
+              ON
+            </button>
+            <button class="custom-button off-button" onclick="togglePump(this)">
+              OFF
+            </button>
+          </div>
+          <div class="button-img">
+            <img src="img/pump-icon.png" alt="" />
+          </div>
+        </div>
+        <div id="bulb" class="item control-button">
+          <div class="title-item"></div>
+          <div class="wrapper-button">
+            <button class="custom-button on-button" onclick="toggleBulb(this)">
+              ON
+            </button>
+            <button class="custom-button off-button" onclick="toggleBulb(this)">
+              OFF
+            </button>
+          </div>
+          <div class="button-img">
+            <img src="img/buld-icon.png" alt="" />
+          </div>
+        </div>
+        <div id="curtain" class="item control-button">
+          <div class="title-item"></div>
+          <div class="wrapper-button">
+            <button
+              class="custom-button on-button"
+              onclick="toggleCurtain(this)"
+            >
+              ON
+            </button>
+            <button
+              class="custom-button off-button"
+              onclick="toggleCurtain(this)"
+            >
+              OFF
+            </button>
+          </div>
+          <div class="button-img">
+            <img src="img/curtain-icon.png" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="footer"></div>
+    <script src="app.js"></script>
+  </body>
+</html>

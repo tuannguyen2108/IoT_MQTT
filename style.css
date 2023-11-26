@@ -1,0 +1,332 @@
+* {
+  margin: 0;
+  padding: 0;
+  overflow-y: none;
+  font-family: Arial, Helvetica, sans-serif;
+}
+*:focus {
+  outline: 0 !important;
+}
+body {
+  /* background-image: url(https://scontent.fdad3-1.fna.fbcdn.net/v/t1.15752-9/387525369_287389397578891_1405844716795295495_n.png?_nc_cat=108&ccb=1-7&_nc_sid=ae9488&_nc_ohc=MF6eF4gbWLoAX9KwhI4&_nc_ht=scontent.fdad3-1.fna&oh=03_AdQ98k4S580TQ55ciKK7koWjjbkrOqF7bEJC1heecIk4Zg&oe=654C7EBE); */
+  /* background-repeat: no-repeat;
+    background-size: cover; */
+  background-color: #ffffff;
+  position: relative;
+}
+ul {
+  margin-bottom: 0;
+}
+#header {
+  min-height: 130px;
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  /* background-color: #009578; */
+  background: linear-gradient(to right, rgb(65, 88, 114), rgb(14, 192, 216));
+  /* background: transparent; */
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+}
+.header_wp {
+  flex-grow: 1;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#nav {
+  font-size: 18px;
+  font-weight: bold;
+}
+.menu {
+  display: flex;
+  list-style: none;
+  margin-right: 50px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0px;
+}
+
+.menu li {
+  padding-left: 30px;
+}
+.menu li a {
+  color: #fff;
+  text-decoration: none;
+}
+.menu li a:hover {
+  /* color: #c9caca; */
+}
+
+/* CONTENT */
+#content {
+  margin-top: 200px;
+}
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 cột với chiều rộng bằng nhau */
+  grid-template-rows: 300px 150px 300px 300px; /* 4 hàng với chiều cao 50px */
+  gap: 10px; /* Khoảng cách giữa các ô */
+}
+
+.item {
+  /* Phần CSS cho mỗi ô trong lưới */
+  border: 1px solid #000;
+  padding: 10px;
+  text-align: center;
+  position: relative;
+  /* z-index: ; */
+}
+
+/* Chỉ định cột cho hàng thứ 2 */
+.item:nth-child(4) {
+  grid-column: span 3; /* Hàng thứ 2 chiếm 3 cột */
+}
+/* phần trăm */
+.DHT11 li {
+  width: 250px;
+  height: 350px;
+}
+.humidity,
+.temprature {
+  width: 250px;
+}
+.title_temperature {
+  font-size: 24px;
+  /* background-image:  rgb(5, 243, 17); */
+  /* -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;  */
+  font-size: 35px;
+  font-weight: 800;
+}
+.title_humidity {
+  font-size: 24px;
+  /* background-image:  linear-gradient(to right,#80D0C7 ,#0023e9 );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;  */
+  font-size: 35px;
+  font-weight: 800;
+}
+.gauge {
+  width: 100%;
+  /* max-width: 250px; */
+  font-family: "Roboto", sans-serif;
+  font-size: 32px;
+  color: #004033;
+  /* border: solid 2px #009578; */
+  /* border-radius: 50px; */
+  background-color: #b91818;
+  padding: 20px;
+  background: transparent;
+}
+.gauge h2 {
+  /* min-width: 370px; */
+  /* font-size: 33px; */
+  margin-top: 45px !important;
+}
+.gauge__border {
+  border: solid 2px #fff;
+  border-image-source: linear-gradient(
+    to right,
+    rgb(75, 108, 183),
+    rgb(24, 40, 72)
+  );
+  border-image-slice: 1;
+  border-image-width: 2px;
+  border-image-outset: 0;
+  border-image-repeat: stretch;
+  /* border-radius: 50px; */
+  background-color: #fff;
+}
+
+.gauge__body {
+  width: 100%;
+  height: 0;
+  padding-bottom: 50%;
+  background: #b4c0be;
+  position: relative;
+  border-top-left-radius: 100% 200%;
+  border-top-right-radius: 100% 200%;
+  overflow: hidden;
+}
+
+.gauge__fill {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: inherit;
+  height: 100%;
+  background: linear-gradient(to left, rgb(255, 255, 255), rgb(7, 161, 233));
+  transform-origin: center top;
+  transform: rotate(0.25turn);
+  transition: transform 0.2s ease-out;
+}
+
+.gauge__cover {
+  width: 75%;
+  height: 150%;
+  background: #ffffff !important;
+  border-radius: 50%;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  /* Text */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 25%;
+  box-sizing: border-box;
+}
+/* HÀNG 2 */
+#progress {
+  width: 90%;
+  /* margin: 20px 0 20px 0; */
+  -webkit-appearance: none;
+  height: 20px;
+  background-color: rgb(14, 122, 216);
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#progress::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 30px;
+  height: 50px;
+  /* border-radius: 50%; */
+  background: #000;
+  cursor: pointer;
+}
+/* HÀNG 3 */
+.wrapper-button {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99;
+}
+.title-item {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99;
+}
+.title-item H2 {
+  font-weight: 800;
+  min-width: 350px;
+}
+.wrapper-img img {
+  max-width: 200px;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.button-img img {
+  max-width: 200px;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  opacity: 0.1;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+.wrapper-button button {
+  width: 100px;
+  height: 80px;
+  margin: 10px;
+}
+/* FOOTER */
+#footer {
+  min-height: 200px;
+}
+
+/* hiệu ưng nhấn nút */
+
+.custom-button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  /* border: 2px solid #ff0000; */
+  border-radius: 5px;
+  color: #000;
+  background-color: #fff;
+  transition: background-color 0.3s, color 0.3s, transform 0.2s;
+}
+
+/* Khi di chuột qua button, đổi màu nền và màu chữ */
+/* .custom-button:hover {
+  background-color: #ff0000;
+  color: #fff;
+}
+.active-button {
+  background-color: #ff0000;
+} */
+
+.on-button {
+  background-color: #ff0000;
+}
+.off-button {
+  background-color: #7cfc00;
+}
+/* Khi nhấn vào button, áp dụng hiệu ứng scale nhỏ để tạo cảm giác nhấn */
+/* .custom-button:active {
+  transform: scale(0.95);
+} */
+/* responsive */
+/* large devives (desktops,  less than 1200px) */
+@media (max-width: 1199.89px) {
+}
+/* medium devives (desktops, less than  992px) */
+@media (max-width: 991.98px) {
+}
+/* small devives (desktops, less than  768px) */
+@media (max-width: 767.98px) {
+  .logo {
+    font-size: 30px !important;
+  }
+
+  #content {
+    margin-top: 300px;
+  }
+
+  .container {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(10, 1fr);
+    gap: 20px; /* Khoảng cách giữa các ô */
+  }
+
+  .item {
+    grid-column: span 1;
+  }
+
+  .item:nth-child(4) {
+    grid-column: span 1;
+  }
+}
+/* extral small devives (desktops,  less than 576 px) */
+@media (max-width: 575.98px) {
+}
