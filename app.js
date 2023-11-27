@@ -91,14 +91,14 @@ function getCurtainStatus(string) {
 }
 
 // ================= MQTT ===================
-// PRIVATE BROKER
+//Kết nối MQTT
 // var client = mqtt.connect("wss://smartgarden.cloud.shiftr.io", {
 //   username: "smartgarden",
 //   password: "Qhso0aAn9XUrGkYN",
 // });
+
 // PUBLISH BROKER
 var client = mqtt.connect("wss://broker.hivemq.com:8884/mqtt");
-// var deviceName = "MyESP32Device";
 
 client.on("connect", function () {
   console.log("Connected to shiftr.io broker");
@@ -118,6 +118,15 @@ client.on("message", function (topic, message) {
   var bulbStatus = data.Bulb_Status; // Đã sửa từ "bulbStatus" thành "bulbStatus"
   var pumpStatus = data.Pump_Status;
   var curtainStatus = data.Curtain_Status;
+  var xImg = document.getElementById("rain-img-non");
+  var rainBlock = document.getElementById("rain-status");
+  var lightBlock = document.getElementById("light-status");
+  var lightImg = document.getElementById("light-img");
+  var modeButton = document.getElementById("mode");
+  var pumpButton = document.getElementById("pump");
+  var buldButton = document.getElementById("bulb");
+  var curtainButton = document.getElementById("curtain");
+  var soilValue = document.getElementById("soil-value");
   // console.log(bulbStatus);
   //GAUGE
   setGaugeValueHum(humValue);
@@ -134,8 +143,7 @@ client.on("message", function (topic, message) {
   getCurtainStatus(curtainStatus);
   // getSoilStatus(soilValue);
   //change image status
-  var xImg = document.getElementById("rain-img-non");
-  var rainBlock = document.getElementById("rain-status");
+
   if (rainStatus == "MƯA") {
     rainBlock.style.backgroundColor = "#E0F4FF";
     xImg.style.display = "none";
@@ -144,8 +152,6 @@ client.on("message", function (topic, message) {
     xImg.style.display = "block";
   }
 
-  var lightBlock = document.getElementById("light-status");
-  var lightImg = document.getElementById("light-img");
   if (lightStatus == "TỐI") {
     lightBlock.style.backgroundColor = "#27536b";
     lightImg.src = "img/moon-icon.png";
@@ -154,16 +160,11 @@ client.on("message", function (topic, message) {
     lightImg.src = "img/sun-icon.png";
   }
 
-  var modeButton = document.getElementById("mode");
-  var pumpButton = document.getElementById("pump");
-  var buldButton = document.getElementById("bulb");
-  var curtainButton = document.getElementById("curtain");
-
   function toggleButton(button, status, string) {
     if (status == `${string}`) {
-      button.style.backgroundColor = "#D8D9DA";
+      button.style.backgroundColor = "#ffffff";
     } else {
-      button.style.backgroundColor = "rgb(14, 192, 216)";
+      button.style.backgroundColor = "#FFF6E0";
     }
   }
   toggleButton(modeButton, modeStatus, "TẮT");
@@ -172,7 +173,6 @@ client.on("message", function (topic, message) {
   toggleButton(curtainButton, curtainStatus, "THU");
 
   // get value for threshold Soil title
-  var soilValue = document.getElementById("soil-value");
   soilValue.innerText = thresholdSoilValue;
 });
 
@@ -242,3 +242,38 @@ function pullBar(value) {
     client.publish("esp32/soil", value);
   }
 }
+//////////////////
+const firebaseConfig = {
+  apiKey: "AIzaSyA0_aeN4RItSNbkR-OcqD5kde2HPv9rcVc",
+  authDomain: "aiot-smart-garden.firebaseapp.com",
+  projectId: "aiot-smart-garden",
+  storageBucket: "aiot-smart-garden.appspot.com",
+  messagingSenderId: "67028874465",
+  appId: "1:67028874465:web:98633eb27f9e759a0373a0",
+};
+
+firebase.initializeApp(firebaseConfig);
+var storage = firebase.storage();
+var imagePath = "images/photo.jpg";
+
+// Hàm để cập nhật ảnh từ Firebase Storage
+function updateImage() {
+  storage
+    .ref()
+    .child(imagePath)
+    .getDownloadURL()
+    .then(function (url) {
+      // Gán đường dẫn ảnh vào thuộc tính src của thẻ img
+      $("#image").attr("src", url);
+      $("#image").css("width", "400px");
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
+
+// Cập nhật ảnh mỗi 2 giây (2000 milliseconds)
+setInterval(updateImage, 2000);
+
+// Gọi hàm updateImage lần đầu khi trang được tải
+updateImage();
