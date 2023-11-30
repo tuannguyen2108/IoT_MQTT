@@ -92,10 +92,14 @@ function getCurtainStatus(string) {
 
 // ================= MQTT ===================
 //Kết nối MQTT
- var client = mqtt.connect("wss://smartgarden.cloud.shiftr.io", {
+var client = mqtt.connect("wss://smartgarden.cloud.shiftr.io", {
    username: "smartgarden",
    password: "Qhso0aAn9XUrGkYN",
  });
+// var client = mqtt.connect("wss://esp32webserver.cloud.shiftr.io", {
+//   username: "esp32webserver",
+//   password: "GUI7C1I3bnkqHUcR",
+// });
 
 // PUBLISH BROKER
 // var client = mqtt.connect("wss://broker.hivemq.com:8884/mqtt");
