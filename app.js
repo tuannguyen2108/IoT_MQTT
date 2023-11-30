@@ -92,26 +92,26 @@ function getCurtainStatus(string) {
 
 // ================= MQTT ===================
 //Kết nối MQTT
-// var client = mqtt.connect("wss://smartgarden.cloud.shiftr.io", {
-//   username: "smartgarden",
-//   password: "Qhso0aAn9XUrGkYN",
-// });
+ var client = mqtt.connect("wss://smartgarden.cloud.shiftr.io", {
+   username: "smartgarden",
+   password: "Qhso0aAn9XUrGkYN",
+ });
 
 // PUBLISH BROKER
-var client = mqtt.connect("wss://broker.hivemq.com:8884/mqtt");
+// var client = mqtt.connect("wss://broker.hivemq.com:8884/mqtt");
 
 client.on("connect", function () {
   console.log("Connected to shiftr.io broker");
-  client.subscribe("esp32/temp");
+  client.subscribe("esp32/json");
 });
 
 client.on("message", function (topic, message) {
   var data = JSON.parse(message.toString());
   // console.log("Received message:", data);
-  var humValue = parseFloat(data.Humidity) / 100;
-  var tempValue = parseFloat(data.Temperature) / 100;
-  var soilValue = parseFloat(data.Soil_Humidity) / 100;
-  var thresholdSoilValue = parseFloat(data.Ref_Value);
+  var humValue = parseInt(data.Humidity) / 100;
+  var tempValue = parseInt(data.Temperature) / 100;
+  var soilValue = parseInt(data.Soil_Humidity) / 100;
+  var thresholdSoilValue = parseInt(data.Ref_Value);
   var lightStatus = data.Light_Status;
   var rainStatus = data.Rain_Status;
   var modeStatus = data.Mode_Status;
@@ -126,8 +126,8 @@ client.on("message", function (topic, message) {
   var pumpButton = document.getElementById("pump");
   var buldButton = document.getElementById("bulb");
   var curtainButton = document.getElementById("curtain");
-  var soilValue = document.getElementById("soil-value");
-  // console.log(bulbStatus);
+  var soilValueProgress = document.getElementById("soil-value");
+  console.log(soilValue);
   //GAUGE
   setGaugeValueHum(humValue);
   setGaugeValueTemp(tempValue);
@@ -173,7 +173,7 @@ client.on("message", function (topic, message) {
   toggleButton(curtainButton, curtainStatus, "THU");
 
   // get value for threshold Soil title
-  soilValue.innerText = thresholdSoilValue;
+  soilValueProgress.innerText = thresholdSoilValue;
 });
 
 //========== ONCLICK TO PUBLISH ==========
