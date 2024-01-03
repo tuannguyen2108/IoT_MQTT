@@ -248,12 +248,14 @@ function pullBar(value) {
 }
 //////////////////
 const firebaseConfig = {
-  apiKey: "AIzaSyA0_aeN4RItSNbkR-OcqD5kde2HPv9rcVc",
-  authDomain: "aiot-smart-garden.firebaseapp.com",
-  projectId: "aiot-smart-garden",
-  storageBucket: "aiot-smart-garden.appspot.com",
-  messagingSenderId: "67028874465",
-  appId: "1:67028874465:web:98633eb27f9e759a0373a0",
+  apiKey: "AIzaSyCULGnctdhnqhv-88WGcLFuiox2FXg3W6g",
+  authDomain: "pbl5-1c94d.firebaseapp.com",
+  databaseURL: "https://pbl5-1c94d-default-rtdb.firebaseio.com",
+  projectId: "pbl5-1c94d",
+  storageBucket: "pbl5-1c94d.appspot.com",
+  messagingSenderId: "1016691935021",
+  appId: "1:1016691935021:web:c17a67889dbd9b2a67b5a4",
+  measurementId: "G-E1T8CKZ1E2"
 };
 
 firebase.initializeApp(firebaseConfig);
