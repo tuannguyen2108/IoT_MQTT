@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Redlist Species</string>
+    <string name="predict">predict</string>
+    <string name="camera">Camera</string>
+</resources>

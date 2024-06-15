@@ -1,0 +1,4 @@
+0 Cây Bị Chết
+1 Cây Khỏe Mạnh
+2 Cây Bị Héo
+3 Cây Bị Sâu
